@@ -101,6 +101,44 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Player Actions",
+            "id": "cdd96692-d9a3-4072-8577-12a008032bbc",
+            "actions": [
+                {
+                    "name": "Roll",
+                    "type": "Button",
+                    "id": "076004e6-8dd5-4ac8-8275-ad0dbc90e513",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e4aaf05f-d0aa-443e-8f9a-7ebabf89abd6",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "07cbcec4-a910-4099-96d6-654ea09f1a89",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
