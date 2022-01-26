@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerLocomotion : MonoBehaviour
 {
+    PlayerManager playerManager;
     Transform cameraObject;
     InputHandler inputHandler;
     Vector3 moveDirection;
@@ -15,31 +16,20 @@ public class PlayerLocomotion : MonoBehaviour
     public GameObject normalCamera;
 
 
-    [Header("Stats")]
+    [Header("Movment Stats")]
     [SerializeField] float movementSpeed = 5f;
     [SerializeField] float sprintSpeed = 7f;
     [SerializeField] float rotationSpeed = 10f;
-
-    public bool isSprinting;
     
     private void Start()
     {
+        playerManager = GetComponent<PlayerManager>();
         rigidbody = GetComponent<Rigidbody>();
         inputHandler = GetComponent<InputHandler>();
         animatorHandler = GetComponentInChildren<AnimatorHandler>();
         cameraObject = Camera.main.transform;
         myTransform = transform;
         animatorHandler.Initialize();
-    }
-
-    private void Update()
-    {
-        float delta = Time.deltaTime;
-
-        isSprinting = inputHandler.b_Input;
-        inputHandler.TickInput(delta);
-        HandleMovement(delta);
-        HandleRollingAndSprinting(delta);
     }
 
     #region Movement
@@ -83,7 +73,7 @@ public class PlayerLocomotion : MonoBehaviour
         if (inputHandler.sprintFlag) 
         {
             speed = sprintSpeed;
-            isSprinting = true;
+            playerManager.isSprinting = true;
             moveDirection *= speed;
         }
         else
@@ -94,7 +84,7 @@ public class PlayerLocomotion : MonoBehaviour
         Vector3 projectedVelocity = Vector3.ProjectOnPlane(moveDirection, normalVector);
         rigidbody.velocity = projectedVelocity;
 
-        animatorHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0, isSprinting);
+        animatorHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0, playerManager.isSprinting);
 
         if (animatorHandler.canRotate)
         {
