@@ -8,11 +8,13 @@ public class PlayerManager : MonoBehaviour
     Animator anim;
     CameraHandler cameraHandler;
     PlayerLocomotion playerLocomotion;
-
-    public bool isInteracting;
+   
+    public bool isInteracting; //interacting - взаимодействие
 
     [Header("Player Flags")]
     public bool isSprinting;
+    public bool isInAir;
+    public bool isGrounded;
 
 
 private void Awake()
@@ -34,8 +36,9 @@ private void Awake()
         isInteracting = anim.GetBool("isInteracting");
 
         inputHandler.TickInput(delta);
-        playerLocomotion.HandleMovement(delta);
+        playerLocomotion.HandleMovement(delta); // управление движением
         playerLocomotion.HandleRollingAndSprinting(delta);
+        playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
     }
 
     private void FixedUpdate()
@@ -44,7 +47,7 @@ private void Awake()
 
         if (cameraHandler != null)
         {
-            cameraHandler.FollowTarget(delta);
+            cameraHandler.FollowTarget(delta); // следовать за целью
             cameraHandler.HandleCameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
         }
     }
@@ -54,5 +57,10 @@ private void Awake()
         inputHandler.rollFlag = false;
         inputHandler.sprintFlag = false;
         isSprinting = inputHandler.b_Input;
+
+        if (isInAir) 
+        {
+            playerLocomotion.inAirTimer = playerLocomotion.inAirTimer + Time.deltaTime;
+        }
     }
 }
